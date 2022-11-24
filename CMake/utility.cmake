@@ -598,6 +598,12 @@ function(get_latest_supported_cxx CXX_STANDARD)
     if (HAS_NO_EXCEPT_TYPE_SIGNATURE_SUPPORT AND HAS_STL_NO_EXCEPT_TYPE_SIGNATURE_SUPPORT AND
         HAS_PARTIAL_SPECIALIZATION_FOR_ARRAYS)
         set(MAX_CXX_STD 17)
+
+        include(CheckCXXCompilerFlag)
+        check_cxx_compiler_flag(-std=c++20 HAS_STD_20_FLAG)
+        if (HAS_STD_20_FLAG)
+          set(MAX_CXX_STD 20)
+        endif ()
     else()
         if (HAS_CXX_CONSTEXPR)
             set(MAX_CXX_STD 14)
