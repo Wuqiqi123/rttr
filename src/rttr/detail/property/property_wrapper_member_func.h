@@ -48,9 +48,12 @@ class property_wrapper<member_func_ptr, Declaring_Typ, Getter, Setter, Acc_Level
             metadata_handler<Metadata_Count>(std::move(metadata_list)),
             m_getter(get), m_setter(set)
         {
+            using return_type_remove_cr   = std::remove_cvref_t<return_type>;
+            using arg_type_remove_cr      = std::remove_cvref_t<arg_type>;
+
             static_assert(function_traits<Getter>::arg_count == 0, "Invalid number of argument, please provide a getter-member-function without arguments.");
             static_assert(function_traits<Setter>::arg_count == 1, "Invalid number of argument, please provide a setter-member-function with exactly one argument.");
-            static_assert(std::is_same<return_type, arg_type>::value, "Please provide the same signature for getter and setter!");
+            static_assert(std::is_same<return_type_remove_cr, arg_type_remove_cr>::value, "Please provide the same signature for getter and setter!");
 
             init();
         }
