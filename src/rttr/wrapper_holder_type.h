@@ -12,12 +12,12 @@
 namespace rttr {
 
 enum class wrapper_holder_type: std::uint8_t {
-    none,
-    std_shared_ptr,
-    std_unique_ptr,
-    std_weak_prt,
-    std_reference_wrapper,
-    ref
+    None,
+    StdSharedPtr,
+    StdUniquePtr,
+    StdWeakPrt,
+    StdReferenceWrapper,
+    Ref
 };
 
 }

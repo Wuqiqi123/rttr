@@ -240,7 +240,7 @@ struct RTTR_LOCAL wrapper_type_info<T, false>
 template<typename T>
 struct RTTR_LOCAL wrapper_type_name<T, false>
 {
-    static RTTR_INLINE rttr::wrapper_holder_type wrapper_holder_type() RTTR_NOEXCEPT { return rttr::wrapper_holder_type::none; }
+    static RTTR_INLINE rttr::wrapper_holder_type wrapper_holder_type() RTTR_NOEXCEPT { return rttr::wrapper_holder_type::None; }
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

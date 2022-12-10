@@ -56,7 +56,7 @@ struct wrapper_mapper<std::shared_ptr<T>>
 
     static RTTR_INLINE rttr::wrapper_holder_type get_wrapper_holder_type()
     {
-        return rttr::wrapper_holder_type::std_shared_ptr;
+        return rttr::wrapper_holder_type::StdSharedPtr;
     }
 
 
@@ -96,7 +96,7 @@ struct wrapper_mapper<std::reference_wrapper<T>>
 
     static RTTR_INLINE rttr::wrapper_holder_type get_wrapper_holder_type()
     {
-        return rttr::wrapper_holder_type::std_reference_wrapper;
+        return rttr::wrapper_holder_type::StdReferenceWrapper;
     }
 
     static RTTR_INLINE type create(const wrapped_type& t)
@@ -120,7 +120,7 @@ struct wrapper_mapper<std::unique_ptr<T>>
 
     static RTTR_INLINE rttr::wrapper_holder_type get_wrapper_holder_type()
     {
-        return rttr::wrapper_holder_type::std_unique_ptr;
+        return rttr::wrapper_holder_type::StdUniquePtr;
     }
 
     static RTTR_INLINE type create(const wrapped_type& t)
@@ -144,7 +144,7 @@ struct wrapper_mapper<std::weak_ptr<T>>
 
     static RTTR_INLINE rttr::wrapper_holder_type get_wrapper_holder_type()
     {
-        return rttr::wrapper_holder_type::std_weak_prt;
+        return rttr::wrapper_holder_type::StdWeakPrt;
     }
 
     // there is no create method because, weak pointer can only be created by a referencing a shared_ptr.
