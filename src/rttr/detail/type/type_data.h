@@ -38,6 +38,7 @@
 #include "rttr/detail/type/type_name.h"
 #include "rttr/detail/misc/utility.h"
 #include "rttr/destructor.h"
+#include "rttr/wrapper_holder_type.h"
 #include "rttr/method.h"
 #include "rttr/property.h"
 #include "rttr/constructor.h"
@@ -131,6 +132,7 @@ struct RTTR_LOCAL type_data
 {
     type_data* raw_type_data;
     type_data* wrapped_type;
+    wrapper_holder_type holder_type;
     type_data* array_raw_type;
 
     std::string name;
@@ -221,12 +223,24 @@ struct RTTR_LOCAL wrapper_type_info
     static RTTR_INLINE type get_type() RTTR_NOEXCEPT { return type::get<wrapper_mapper_t<T>>(); }
 };
 
+template<typename T, bool = is_wrapper<T>::value>
+struct RTTR_LOCAL wrapper_type_name {
+    using Type = typename std::remove_cv<typename std::remove_reference<T>::type>::type;
+    static RTTR_INLINE rttr::wrapper_holder_type wrapper_holder_type() RTTR_NOEXCEPT { return rttr::wrapper_mapper<Type>::get_wrapper_holder_type(); }
+};
+
 /////////////////////////////////////////////////////////////////////////////////
 
 template<typename T>
 struct RTTR_LOCAL wrapper_type_info<T, false>
 {
     static RTTR_INLINE type get_type() RTTR_NOEXCEPT { return get_invalid_type(); }
+};
+
+template<typename T>
+struct RTTR_LOCAL wrapper_type_name<T, false>
+{
+    static RTTR_INLINE rttr::wrapper_holder_type wrapper_holder_type() RTTR_NOEXCEPT { return rttr::wrapper_holder_type::none; }
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -302,6 +316,7 @@ RTTR_LOCAL std::unique_ptr<type_data> make_type_data()
                         new type_data
                         {
                             raw_type_info<T>::get_type().m_type_data, wrapper_type_info<T>::get_type().m_type_data,
+                            wrapper_type_name<T>().wrapper_holder_type(),
                             array_raw_type<T>::get_type().m_type_data,
 
                             ::rttr::detail::get_type_name<T>().to_string(), ::rttr::detail::get_type_name<T>(),

@@ -32,6 +32,7 @@
 #include "rttr/string_view.h"
 #include "rttr/array_range.h"
 #include "rttr/filter_item.h"
+#include "rttr/wrapper_holder_type.h"
 
 #include <type_traits>
 #include <vector>
@@ -435,6 +436,9 @@ class RTTR_API type
          *
          */
         RTTR_INLINE bool is_wrapper() const RTTR_NOEXCEPT;
+
+
+        RTTR_INLINE rttr::wrapper_holder_type get_wrapper_holder_type() const RTTR_NOEXCEPT;
 
         /*!
          * \brief Returns `true` whether the given type represents an array.

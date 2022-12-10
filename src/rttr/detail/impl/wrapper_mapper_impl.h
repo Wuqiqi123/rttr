@@ -31,6 +31,7 @@
 #include "rttr/detail/base/core_prerequisites.h"
 #include "rttr/detail/misc/std_type_traits.h"
 #include "rttr/detail/misc/utility.h"
+#include "rttr/wrapper_holder_type.h"
 #include <type_traits>
 
 #include <memory>
@@ -52,6 +53,12 @@ struct wrapper_mapper<std::shared_ptr<T>>
     {
         return obj.get();
     }
+
+    static RTTR_INLINE rttr::wrapper_holder_type get_wrapper_holder_type()
+    {
+        return rttr::wrapper_holder_type::std_shared_ptr;
+    }
+
 
     static RTTR_INLINE type create(const wrapped_type& t)
     {
@@ -87,6 +94,11 @@ struct wrapper_mapper<std::reference_wrapper<T>>
         return obj.get();
     }
 
+    static RTTR_INLINE rttr::wrapper_holder_type get_wrapper_holder_type()
+    {
+        return rttr::wrapper_holder_type::std_reference_wrapper;
+    }
+
     static RTTR_INLINE type create(const wrapped_type& t)
     {
         return type(t);
@@ -106,6 +118,11 @@ struct wrapper_mapper<std::unique_ptr<T>>
         return obj.get();
     }
 
+    static RTTR_INLINE rttr::wrapper_holder_type get_wrapper_holder_type()
+    {
+        return rttr::wrapper_holder_type::std_unique_ptr;
+    }
+
     static RTTR_INLINE type create(const wrapped_type& t)
     {
         return type(t);
@@ -123,6 +140,11 @@ struct wrapper_mapper<std::weak_ptr<T>>
     static RTTR_INLINE wrapped_type get(const type& obj)
     {
         return obj.lock().get();
+    }
+
+    static RTTR_INLINE rttr::wrapper_holder_type get_wrapper_holder_type()
+    {
+        return rttr::wrapper_holder_type::std_weak_prt;
     }
 
     // there is no create method because, weak pointer can only be created by a referencing a shared_ptr.

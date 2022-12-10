@@ -265,6 +265,10 @@ RTTR_INLINE bool type::is_wrapper() const RTTR_NOEXCEPT
     return m_type_data->wrapped_type->is_valid;
 }
 
+RTTR_INLINE rttr::wrapper_holder_type type::get_wrapper_holder_type() const RTTR_NOEXCEPT {
+    return m_type_data->holder_type;
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

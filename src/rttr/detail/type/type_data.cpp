@@ -38,6 +38,7 @@ namespace detail
 static type_data& get_invalid_type_data_impl() RTTR_NOEXCEPT
 {
     static type_data instance{ nullptr, nullptr,
+                               wrapper_holder_type::none,
                                nullptr,
                                std::string(""), string_view(),
                                0, 0,
