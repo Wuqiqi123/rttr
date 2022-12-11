@@ -432,10 +432,10 @@ RTTR_INLINE void type::register_converter_func(F func)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-template<typename T>
+template<typename Derived, typename Base>
 RTTR_INLINE void type::register_wrapper_converter_for_base_classes()
 {
-    detail::reg_wrapper_converter_for_base_classes<T>();
+    detail::reg_wrapper_converter_for_base_classes<Derived, Base>();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

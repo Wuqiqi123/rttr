@@ -55,6 +55,11 @@ struct wrapper_mapper<custom_wrapper<T>>
     {
        return custom_wrapper<T>(value);
     }
+
+    static RTTR_INLINE rttr::wrapper_holder_type get_wrapper_holder_type()
+    {
+        return rttr::wrapper_holder_type::None;
+    }
 };
 
 }

@@ -64,56 +64,33 @@ using has_wrapper_conv_func = std::integral_constant<bool, has_conversion_functi
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-/*!
- * Registers for the given type \p DerivedClass a conversion function
- * from \ref wrapper_mapper<T> from and to the types in the list `T...`.
- */
-template<typename DerivedClass, typename... T>
-struct create_wrapper_conversion;
 
-template<typename DerivedClass>
-struct create_wrapper_conversion<DerivedClass>
-{
-    static RTTR_INLINE void perform() { }
-};
-
-template<typename DerivedClass, typename BaseClass, typename... U>
-struct create_wrapper_conversion<DerivedClass, BaseClass, U...>
+template<typename Derived, typename Base>
+struct create_wrapper_conversion
 {
     static RTTR_INLINE void perform()
     {
-        static_assert(has_base_class_list<BaseClass>::value, "The parent class has no base class list defined - please use the macro RTTR_ENABLE");
-        type::register_converter_func(wrapper_mapper<DerivedClass>::template convert<BaseClass>);
-        using return_type = typename function_traits<decltype(&wrapper_mapper<DerivedClass>::template convert<BaseClass>)>::return_type;
+        using base_wrapped_type = raw_type_t<wrapper_mapper_t<Base>>;
+        type::register_converter_func(wrapper_mapper<Derived>::template convert<base_wrapped_type>);
+        using return_type = typename function_traits<decltype(&wrapper_mapper<Derived>::template convert<base_wrapped_type>)>::return_type;
         // TO DO: remove raw_type_t, std::shared_ptr<const T> should also be converted, when necessary
-        using wrapped_derived_t = raw_type_t<wrapper_mapper_t<DerivedClass>>;
+        using wrapped_derived_t = raw_type_t<wrapper_mapper_t<Derived>>;
         type::register_converter_func(wrapper_mapper<return_type>::template convert<wrapped_derived_t>);
 
-        create_wrapper_conversion<DerivedClass, typename BaseClass::base_class_list>::perform();
-        // continue with the rest
-        create_wrapper_conversion<DerivedClass, U...>::perform();
     }
 };
 
-template<typename DerivedClass, class... BaseClassList>
-struct create_wrapper_conversion<DerivedClass, type_list<BaseClassList...>> : create_wrapper_conversion<DerivedClass, BaseClassList...> { };
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-template<typename T, typename Enable = void>
+
+template<typename Derived, typename Base>
 struct reg_wrapper_converter_for_base_classes
 {
+    static_assert(is_wrapper<Derived>::value && is_wrapper<Base>::value);
     reg_wrapper_converter_for_base_classes()
     {
-    }
-};
-
-template<typename T>
-struct reg_wrapper_converter_for_base_classes<T, typename std::enable_if<is_wrapper<T>::value && has_base_class_list<raw_type_t<wrapper_mapper_t<T>>>::value>::type>
-{
-    reg_wrapper_converter_for_base_classes()
-    {
-        create_wrapper_conversion<T, typename raw_type_t<wrapper_mapper_t<T>>::base_class_list>::perform();
+        create_wrapper_conversion<Derived, Base>::perform();
     }
 };
 

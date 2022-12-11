@@ -197,8 +197,8 @@ registration::bind<detail::prop, Class_Type, A1, A2, acc_level, Visitor_List> re
     static_assert(function_traits<A2>::arg_count == 1, "Invalid number of arguments, please provide as second argument a setter-member-function with exactly one argument.");
     using return_type   = typename function_traits<A1>::return_type;
     using arg_type      = typename param_types<A2, 0>::type;
-    using return_type_remove_cr   = std::remove_cvref_t<return_type>;
-    using arg_type_remove_cr      = std::remove_cvref_t<arg_type>;
+    using return_type_remove_cr   = typename std::remove_cv<typename std::remove_reference<return_type>::type>::type;
+    using arg_type_remove_cr      = typename std::remove_cv<typename std::remove_reference<arg_type>::type>::type;
     static_assert(std::is_same<return_type_remove_cr, arg_type_remove_cr>::value, "Please provide the same signature (data type) for getter and setter!");
 
     return {create_if_empty(m_reg_exec), name, getter, setter};

@@ -1023,7 +1023,7 @@ class RTTR_API type
          *
          * \see variant::convert(), \ref wrapper_mapper "wrapper_mapper<T>"
          */
-        template<typename T>
+        template<typename Derived, typename Base>
         static void register_wrapper_converter_for_base_classes();
 
         /*!

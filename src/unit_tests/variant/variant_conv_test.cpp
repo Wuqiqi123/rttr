@@ -812,12 +812,12 @@ TEST_CASE("variant test - register_wrapper_converter_for_base_classes<std::share
     variant var = std::make_shared<derived>();
     CHECK(var.convert(type::get<std::shared_ptr<base>>())           == false);
 
-    type::register_wrapper_converter_for_base_classes<std::shared_ptr<derived>>();
+    type::register_wrapper_converter_for_base_classes<std::shared_ptr<derived>, std::shared_ptr<base>>();
 
     CHECK(var.convert(type::get<std::shared_ptr<base>>())           == true);
     CHECK(var.convert(type::get<std::shared_ptr<derived>>())        == true);
 
-    type::register_wrapper_converter_for_base_classes<std::shared_ptr<other_derived>>();
+    type::register_wrapper_converter_for_base_classes<std::shared_ptr<other_derived>, std::shared_ptr<base>>();
 
     // negative test, we need first make a down cast, otherwise the target_type converter cannot be found
     CHECK(var.convert(type::get<std::shared_ptr<base>>())           == true);
