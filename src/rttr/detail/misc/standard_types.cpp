@@ -63,10 +63,14 @@ RTTR_REGISTRATION
     RTTR_REGISTRATION_STANDARD_TYPE_VARIANTS(long double)
     RTTR_REGISTRATION_STANDARD_TYPE_VARIANTS(std::string)
 
-    registration::class_<std::vector<bool>>("std::vector<bool>");
-    registration::class_<std::vector<int>>("std::vector<int>");
-    registration::class_<std::vector<float>>("std::vector<float>");
-    registration::class_<std::vector<double>>("std::vector<double>");
+    registration::class_<std::vector<bool>>("std::vector<bool>")
+        .constructor()(policy::ctor::as_object);
+    registration::class_<std::vector<int>>("std::vector<int>")
+        .constructor()(policy::ctor::as_object);
+    registration::class_<std::vector<float>>("std::vector<float>")
+        .constructor()(policy::ctor::as_object);
+    registration::class_<std::vector<double>>("std::vector<double>")
+        .constructor()(policy::ctor::as_object);
 
 
     registration::class_<std::string>("std::string")
