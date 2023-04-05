@@ -943,7 +943,7 @@ struct RTTR_API convert_from<uint32_t>
 
     static RTTR_INLINE bool to_enum(const uint32_t& from, argument& to)
     {
-        return to_enumeration(from, to);
+        return to_enumeration(from, to) ;
     }
 };
 

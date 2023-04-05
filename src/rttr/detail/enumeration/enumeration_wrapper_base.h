@@ -75,6 +75,8 @@ class RTTR_API enumeration_wrapper_base
         void set_declaring_type(type declaring_type) RTTR_NOEXCEPT;
 
         virtual variant get_metadata(const variant& key) const;
+
+        virtual variant value_to_enum(argument& value) const;
     private:
         type m_declaring_type;
 };

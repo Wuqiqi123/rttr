@@ -201,6 +201,14 @@ class RTTR_API enumeration
          */
         variant name_to_value(string_view name) const;
 
+
+        /*!
+        * \brief Returns the enum that is used as the underlying type of the given value \p value
+        *
+        * \return A enum variant object
+        */
+        variant value_to_enum(argument value) const;
+
         /*!
          * \brief Returns true if this enumeration is the same like the \p other.
          *
@@ -214,6 +222,8 @@ class RTTR_API enumeration
          * \return True if both enumerations are different, otherwise false.
          */
         bool operator!=(const enumeration& other) const RTTR_NOEXCEPT;
+
+
 
     private:
         enumeration(const detail::enumeration_wrapper_base* wrapper) RTTR_NOEXCEPT;

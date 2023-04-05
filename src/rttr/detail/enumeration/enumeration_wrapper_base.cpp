@@ -116,6 +116,11 @@ variant enumeration_wrapper_base::get_metadata(const variant& key) const
     return variant();
 }
 
+variant enumeration_wrapper_base::value_to_enum(argument& value) const
+{
+    return variant();
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 } // end namespace detail

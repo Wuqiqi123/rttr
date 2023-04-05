@@ -97,6 +97,12 @@ class enumeration_wrapper : public enumeration_wrapper_base, public metadata_han
             return string_view();
         }
 
+        variant value_to_enum(argument& value) const
+        {
+            Enum_Type data{value.get_value<typename std::underlying_type<Enum_Type>::type>()};
+            return data;
+        }
+
         variant name_to_value(string_view name) const
         {
             int index = 0;
