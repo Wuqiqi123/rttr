@@ -95,7 +95,7 @@ RTTR_INLINE void insert_space_after(std::string& text, const std::string& part)
     if (found_pos == std::string::npos || found_pos > text.length())
         return;
 
-    text.insert(found_pos, " ");
+    text.insert(found_pos, std::string(" "));
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -110,7 +110,8 @@ RTTR_INLINE void insert_space_before(std::string& text, const std::string& part)
     if (found_pos == std::string::npos || found_pos > text.length())
         return;
 
-    text.insert(found_pos, " ");
+    // https://github.com/open-telemetry/opentelemetry-cpp/pull/2137/files
+    text.insert(found_pos, std::string(" "));
 }
 
 /////////////////////////////////////////////////////////////////////////////////

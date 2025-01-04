@@ -138,6 +138,11 @@ variant enumeration::name_to_value(string_view name) const
     return m_wrapper->name_to_value(name);
 }
 
+variant enumeration::value_to_enum(argument value) const
+{
+    return m_wrapper->value_to_enum(value);
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 bool enumeration::operator==(const enumeration& other) const RTTR_NOEXCEPT
